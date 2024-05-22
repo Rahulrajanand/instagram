@@ -22,9 +22,7 @@ const AuthPage = () => {
      </Flex>
         </VStack>
             </Flex>
-   
-
-        
+           
         </Container>
     </Flex>
   )
