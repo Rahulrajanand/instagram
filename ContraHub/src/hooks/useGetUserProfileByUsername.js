@@ -19,12 +19,23 @@ const useGetUserProfileByUsername = (username) => {
               const querySnapshot = await getDocs(q)
                 
               if(querySnapshot.empty) return setUserProfile(null);
+              let userDoc;
+              querySnapshot.forEach((doc) => {
+                userDoc = doc.data();
+              }) ;
+
+              setUserProfile(userDoc);
+              console.log(userDoc);
             } catch (error) {
               showToast('Error', error.message, 'error')  
+            } finally {
+              setIsLoading(false);
             }
         }
         getUserProfile()
-    },[])
+    },[setUserProfile, username, showToast]);
+
+    return {isLoading, userProfile};
 }       
 
 export default useGetUserProfileByUsername

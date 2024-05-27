@@ -1,10 +1,14 @@
 import { Avatar, AvatarGroup, Button, Flex, Text, VStack } from "@chakra-ui/react"
+import useUserProfileStore from "../../store/userProfileStore"
 
 const ProfileHeader = () => {
+  
+  const {userProfile} = useUserProfileStore();
+
   return (
     <Flex gap={{base:4,sm:10}} py={10} direction={{base:"column",sm:"row"}}>
       <AvatarGroup size={{base:"xl",md:"2xl"}} justifySelf={"center"} alignSelf={"flex-start"} mx={"auto"}>
-        <Avatar name="As a programmer" src="/profilepic.png" />
+        <Avatar  src={userProfile.profilePicURL} />
     </AvatarGroup>
 
     <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
@@ -14,7 +18,7 @@ const ProfileHeader = () => {
         w={"full"}
     >
 
-        <Text fontSize={{ base: 'sm', md: "lg"}}>as a programmer</Text>
+        <Text fontSize={{ base: 'sm', md: "lg"}}>{userProfile.username}</Text>
 
         <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
             <Button bg={"white"} color={"black"} _hover={{bg:"whiteAlpha.800"}} size={{base: "xs", md: "sm"}}>
