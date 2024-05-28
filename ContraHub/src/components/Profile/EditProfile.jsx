@@ -172,7 +172,9 @@ const EditProfile = ({ isOpen, onClose }) => {
     });
     const authUser = useAuthStore((state) => state.user);
     const fileRef = useRef(null);
-	const {handleImageChange, selectedFile, setSelectedFile} =  usePreviewImg()
+	const {handleImageChange, selectedFile, setSelectedFile} =  usePreviewImg();
+
+
     const handleEditProfile = () => {
         console.log(inputs);
     }
@@ -195,7 +197,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 								<FormControl>
 									<Stack direction={["column", "row"]} spacing={6}>
 										<Center>
-											<Avatar size='xl' src={""} border={"2px solid white "} />
+											<Avatar size='xl' src={selectedFile || authUser.profilePicURL} border={"2px solid white "} />
 										</Center>
 										<Center w='full'>
 											<Button w='full' onClick={() => fileRef.current.click()}>Edit Profile Picture</Button>
@@ -213,7 +215,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 								</FormControl>
 
 								<FormControl>
-									<FormLabel fontSize={"sm"}>Username</FormLabel>
+									<FormLabel fontSize={"sm"}>Username</FormLabel> 
 									<Input placeholder={"Username"} size={"sm"} type={"text"}
                                         value={inputs.username || authUser.username}
                                         onChange={(e) => setInputs({...inputs, username: e.target.value})}
