@@ -10,11 +10,12 @@ const useFollowUser = (userId) => {
   
     const [isUpdating, setIsUpdating] = useState(false)
     const [isFollowing, setIsFollowing] = useState(false)
-    const {authUser,setAuthUser} = useAuthStore()
+    const authUser = useAuthStore((state) => state.user)
+    const setAuthUser = useAuthStore((state) => state.setUser)
     const { userProfile, setUserProfile} = useUserProfileStore()
     const showToast = useShowToast()
 
-    const handleFollower = async () => {
+    const handleFollowerUser = async () => {
         setIsUpdating(true)
         try {
             const currentUserRef = doc(firestore, "users", authUser.uid)
@@ -78,7 +79,7 @@ const useFollowUser = (userId) => {
         }
     },[authUser,userId])
 
-    return {isUpdating, isFollowing, handleFollower}
+    return {isUpdating, isFollowing, handleFollowerUser}
 }
 
 export default useFollowUser
