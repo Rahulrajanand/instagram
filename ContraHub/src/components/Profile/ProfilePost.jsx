@@ -6,8 +6,9 @@ import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
  
 
-const ProfilePost = ( {img} ) => {
+const ProfilePost = ( {post} ) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log(post);
   return (
     <>
     
@@ -52,7 +53,7 @@ const ProfilePost = ( {img} ) => {
       </Flex>
      </Flex>
 
-    <Image src={img} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"}/>
+    <Image src={post.imageURL} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"}/>
     </GridItem>
 
     <Modal isOpen={isOpen} onClose={onClose}
@@ -68,7 +69,7 @@ const ProfilePost = ( {img} ) => {
             <Flex gap="4" w={{base:"90%",sm: "70%", md: "full" }} mx={"auto"}>
               <Box borderRadius={4} overflow={"hidden"} border={"1px solid"} borderColor={"whiteAlpha.300"} flex={1.5}>
 
-              <Image src={img} alt="profile post"/>
+              <Image src={post.imageURL} alt="profile post"/>
               </Box>
               <Flex flex={1} flexDir={"column"} px={10} display={{base: "none", md:"flex"}}>
                 <Flex alignItems={"center"} justifyContent={"space-between"}>               
