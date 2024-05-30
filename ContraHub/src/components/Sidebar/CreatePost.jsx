@@ -171,16 +171,18 @@
 // }
 
 // 1- COPY AND PASTE AS THE STARTER CODE FOR THE CRAETEPOST COMPONENT
-import { Box, Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, Tooltip, useDisclosure, useStatStyles } from "@chakra-ui/react";
+import { Box, Button, CloseButton, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, Tooltip, useDisclosure, useStatStyles } from "@chakra-ui/react";
 import { CreatePostLogo } from "../../assets/constants";
 import {BsFillImageFill} from "react-icons/bs"
-import { useState } from "react";
+import { useRef, useState } from "react";
+import usePreviewImg from "../../hooks/usePreviewImg"
 
 const CreatePost = () => {
 
 	const { isOpen, onOpen, onClose} = useDisclosure();
 	const [caption, setCaption] = useState('')
 	const imageRef = useRef(null)
+	const {handleImageChange, selectedFile, setSelectedFile} = usePreviewImg()
 
 	return (
 		<>
@@ -218,13 +220,27 @@ const CreatePost = () => {
 							onChange={(e) => setCaption(e.target.value)}
 						/>
 
-						<Input type='file' hidden ref={imageRef}/>
+						<Input type='file' hidden ref={imageRef} onChange={handleImageChange}/>
 
 						<BsFillImageFill
 							onClick={() => imageRef.current.click()}
 							style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
 							size={16}
 						/>
+							{selectedFile && (
+								<Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"}>
+									<Image  src={selectedFile} alt='Selected img'/> 
+									<CloseButton
+										position={"absolute"}
+										top={2}
+										right={2}
+										onClick={() => {
+											setSelectedFile(null);
+										}}
+									/>
+								</Flex>
+							)}
+						
 					</ModalBody>
 
 					<ModalFooter>
