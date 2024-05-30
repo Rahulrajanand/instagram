@@ -124,8 +124,7 @@ const Search = () => {
 				</Flex>
 			</Tooltip> 
 
-			<Modal isOpen={isOpen} onClose={onClose} motionPreset= 'slideInLeft'			
-			>				
+			<Modal isOpen={isOpen} onClose={onClose} motionPreset= 'slideInLeft'>				
 				<ModalOverlay/>
 				<ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
 				<ModalHeader>Search User</ModalHeader>
@@ -143,7 +142,7 @@ const Search = () => {
 							</Button>
 						</Flex>
 					</form>
-					{user && <SuggestedUser user={user} setUser={setUser}/>}
+					{user && <SuggestedUser user={user} isLoading={isLoading} setUser={setUser}/>}
 				</ModalBody>
 				</ModalContent>				
 			</Modal>

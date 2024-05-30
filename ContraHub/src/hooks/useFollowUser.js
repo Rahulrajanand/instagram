@@ -1,85 +1,88 @@
-import { useEffect, useState } from "react"
-import useAuthStore from "../store/authStore"
-import useUserProfileStore from "../store/userProfileStore"
-import useShowToast from "./useShowToast"
-import { firestore } from "../firebase/firebase"
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
-
+import { useEffect, useState } from "react";
+import useAuthStore from "../store/authStore";
+import useUserProfileStore from "../store/userProfileStore";
+import useShowToast from "./useShowToast";
+import { firestore } from "../firebase/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 const useFollowUser = (userId) => {
-  
-    const [isUpdating, setIsUpdating] = useState(false)
-    const [isFollowing, setIsFollowing] = useState(false)
-    const authUser = useAuthStore((state) => state.user)
-    const setAuthUser = useAuthStore((state) => state.setUser)
-    const { userProfile, setUserProfile} = useUserProfileStore()
-    const showToast = useShowToast()
+	const [isUpdating, setIsUpdating] = useState(false);
+	const [isFollowing, setIsFollowing] = useState(false);
+	const authUser = useAuthStore((state) => state.user);
+	const setAuthUser = useAuthStore((state) => state.setUser);
+	const { userProfile, setUserProfile } = useUserProfileStore();
+	const showToast = useShowToast();
 
-    const handleFollowerUser = async () => {
-        setIsUpdating(true)
-        try {
-            const currentUserRef = doc(firestore, "users", authUser.uid)
-            const userToFollowOrUnfollowRef = doc(firestore, "users", userId)
+	const handleFollowUser = async () => {
+		setIsUpdating(true);
+		try {
+			const currentUserRef = doc(firestore, "users", authUser.uid);
+			const userToFollowOrUnfollorRef = doc(firestore, "users", userId);
+			await updateDoc(currentUserRef, {
+				following: isFollowing ? arrayRemove(userId) : arrayUnion(userId),
+			});
 
-            await updateDoc(currentUserRef, {
-                following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
-            })
+			await updateDoc(userToFollowOrUnfollorRef, {
+				followers: isFollowing ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid),
+			});
 
-            await updateDoc(userToFollowOrUnfollowRef, {
-                followers: isFollowing ? arrayRemove(userId) : arrayUnion(authUser.uid)
-            })
+			if (isFollowing) {
+				// unfollow
+				setAuthUser({
+					...authUser,
+					following: authUser.following.filter((uid) => uid !== userId),
+				});
+				if (userProfile)
+					setUserProfile({
+						...userProfile,
+						followers: userProfile.followers.filter((uid) => uid !== authUser.uid),
+					});
 
-            if(isFollowing) {
-                //unfollow
-                setAuthUser({
-                    ...authUser,
-                    following: authUser.following.filter(uid => uid !== userId)
-                })
-                setUserProfile({
-                    ...userProfile,
-                    followers: userProfile.followers.filter(uid => uid !== authUser.uid)
-                })
+				localStorage.setItem(
+					"user-info",
+					JSON.stringify({
+						...authUser,
+						following: authUser.following.filter((uid) => uid !== userId),
+					})
+				);
+				setIsFollowing(false);
+			} else {
+				// follow
+				setAuthUser({
+					...authUser,
+					following: [...authUser.following, userId],
+				});
 
-                localStorage.setItem("user-info", JSON.stringify({
-                    ...authUser,
-                    following: authUser.following.filter(uid => uid !== userId)
-                }))
-                setIsFollowing(false)
+				if (userProfile)
+					setUserProfile({
+						...userProfile,
+						followers: [...userProfile.followers, authUser.uid],
+					});
 
-            } else {
-                //follow
-                setAuthUser ({
-                    ...authUser ,
-                        following: [...authUser.following, userId]
-                    })       
-                setUserProfile({
-                    ...userProfile,
-                    followers: [...userProfile.followers, authUser.uid]
-                })    
-                
-                localStorage.setItem("user-info", JSON.stringify({
-                    ...authUser ,
-                    following: [...authUser.following, userId]
-                }))
+				localStorage.setItem(
+					"user-info",
+					JSON.stringify({
+						...authUser,
+						following: [...authUser.following, userId],
+					})
+				);
+				setIsFollowing(true);
+			}
+		} catch (error) {
+			showToast("Error", error.message, "error");
+		} finally {
+			setIsUpdating(false);
+		}
+	};
 
-                setIsFollowing(true)
-            }
+	useEffect(() => {
+		if (authUser) {
+			const isFollowing = authUser.following.includes(userId);
+			setIsFollowing(isFollowing);
+		}
+	}, [authUser, userId]);
 
-        } catch (error) {
-          showToast("Error",error.message,"error")  
-        } finally {
-            setIsUpdating(false)
-        }
-    }
+	return { isUpdating, isFollowing, handleFollowUser };
+};
 
-    useEffect(() => {
-        if(authUser) {
-            const isFollowing = authUser.following.includes(userId)
-            setIsFollowing(isFollowing)
-        }
-    },[authUser,userId])
-
-    return {isUpdating, isFollowing, handleFollowerUser}
-}
-
-export default useFollowUser
+export default useFollowUser;
