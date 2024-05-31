@@ -21,6 +21,7 @@ const ProfilePost = ( {post} ) => {
   const showToast = useShowToast();
   const [isDeleting, setIsDeleting] = useState(false);
   const deletePost = usePostStore(state => state.deletePost);
+  const decrementPostsCount = useUserProfileStore((state) => state.deletePost)
   
   const handleDeletePost = async () => {
     if(!window.confirm("Are you sure you want to delete this post?")) return;
@@ -37,7 +38,8 @@ const ProfilePost = ( {post} ) => {
       })
 
       deletePost(post.id);
-      showToast("Error", "Post deleted successfully", "success")
+      decrementPostsCount(post.id),
+      showToast("Success", "Post deleted successfully", "success")
 
 
     } catch (error) {
