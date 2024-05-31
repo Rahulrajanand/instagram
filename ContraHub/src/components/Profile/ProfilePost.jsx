@@ -141,7 +141,9 @@ const ProfilePost = ( {post} ) => {
             <Divider my={4} bg={"gray.500"}/>
 
             <VStack w="full" alignItems={"start"} maxH={"350px"} overflowY={"auto"}>
-             
+              {/* Caption */}                                     
+                 {post.caption && <Caption post={post}/>}    {/*if this post has caption, then render caption component with post */}
+              {/* COMMENTS */}
              {post.comments.map(comment => (
               <Comment key={comment.id} comment={comment}/>
              ))}
