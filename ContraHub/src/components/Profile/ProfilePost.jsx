@@ -12,6 +12,7 @@ import { deleteObject,ref } from 'firebase/storage';
 import { firestore, storage } from '../../firebase/firebase'
 import { arrayRemove, doc,deleteDoc, updateDoc } from "firebase/firestore";
 import usePostStore from "../../store/postStore";
+import Caption from "../Comment/Caption";
  
 
 const ProfilePost = ( {post} ) => {
