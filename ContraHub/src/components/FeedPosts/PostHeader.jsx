@@ -9,7 +9,7 @@ const PostHeader = ({username,avatar}) => {
               {username}
               <Box color={"gray.500"}>
                 1w
-              </Box>   
+              </Box>    
             </Flex>
         </Flex>
         <Box 
