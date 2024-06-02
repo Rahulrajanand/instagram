@@ -6,7 +6,7 @@ import useGetFeedPosts from '../../hooks/useGetFeedPosts';
 
 const FeedPosts = () => {
   
-  const [isLoading,posts] = useGetFeedPosts();
+  const {isLoading,posts} = useGetFeedPosts();
 
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
@@ -26,7 +26,7 @@ const FeedPosts = () => {
         ))}
        
        {!isLoading && posts.length > 0  && posts.map((post) => <FeedPost key={post.id} post={post}/>)}
-
+ 
     </Container>
 
   )
