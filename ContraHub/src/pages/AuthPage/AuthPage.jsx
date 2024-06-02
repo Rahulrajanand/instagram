@@ -8,18 +8,18 @@ const AuthPage = () => {
         <Container maxW={"container.md"} padding={0}>
             <Flex justifyContent={"center"} alignItems={"center"} gap={10}>
              {/* left side */}
-        <Box display={{base:"none", md:"block"}}>
+        {/* <Box display={{base:"none", md:"block"}}>
             <Image src="/auth.png" h={650} alt='Phone img'/>
-        </Box>
+        </Box> */}
 
         {/* right side */}
         <VStack spacing={4} align={"stretch"}>
       <AuthForm/> 
-     <Box textAlign={"center"}>Get the app</Box>
+     {/* <Box textAlign={"center"}>Get the app</Box>
      <Flex gap={5} justifyContent={"center"}>
         <Image SRC='/playstore.png' h={"10"} alt='Playstore logo'/>
         <Image SRC='/microsoft.png' h={"10"} alt='Microsoft logo'/>
-     </Flex>
+     </Flex> */}
         </VStack>
             </Flex>
            
