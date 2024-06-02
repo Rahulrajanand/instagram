@@ -1,26 +1,35 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
-import { Link } from 'react-feather'
+import { Avatar, Box, Button, Flex, SkeletonCircle } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import useFollowUser from '../../hooks/useFollowUser'
 
 const PostHeader = ({post,creatorProfile}) => {
+  const {isUpdating, isFollowing, handleFollowUser}  = useFollowUser(post.createdBy)
+
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"} my={2}>        
         <Flex alignItems={"center"} gap={2}>
-          <Link to={`/${creatorProfile.username}`}>
-            <Avatar src={creatorProfile.profilePicURL} alt="user profile pic" size={"sm"}/>
-            </Link>
+         {creatorProfile ? (
+             <Link to={`/${creatorProfile.username}`}>
+             <Avatar src={creatorProfile.profilePicURL} alt="user profile pic" size={"sm"}/>
+             </Link>
+         ) : (
+          <SkeletonCircle size='10'/>
+         )} 
+         
             <Flex fontSize={12} fontWeight={"bold"} gap="2">
-            <Link to={`/${creatorProfile.username}`}>
-              {creatorProfile.username}
-              </Link>
-              <Box color={"gray.500"}>
-                1w
-              </Box>    
+              {creatorProfile ? (
+                  <Link to={`/${creatorProfile.username}`}>  {creatorProfile.username}  </Link>                 
+              ): (
+                <SkeletonCircle w={"100px"} h={"10px"}/>
+              )}
+               <Box color={"gray.500"}>1w</Box> 
+               
             </Flex>
         </Flex>
-        <Box 
-        cursor={"pointer"}
-        >
-            <Text
+        <Box  cursor={"pointer"} >
+            <Button
+                size={"xs"}
+                bg={"transparent"}
                 fontSize={12}
                 color={"blue.500"}
                 fontWeight={"bold"}
@@ -28,9 +37,11 @@ const PostHeader = ({post,creatorProfile}) => {
                     color: "white",
                 }}
                 transition={"0.2s ease-in-out"}
+                onClick={handleFollowUser}
+                isLoading={isUpdating}
             >
-                Unfollow
-            </Text>
+                {isFollowing ? "Unfollow" : "Follow"}
+            </Button>
         </Box>
     </Flex>  
   )

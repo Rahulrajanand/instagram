@@ -5,7 +5,7 @@ import usePostComment from "../../hooks/usePostComment.js";
 import useAuthStore from "../../store/authStore.js";
 import useLikePost from "../../hooks/useLikePost.js";
 
-const PostFooter = ( {post,username, isProfilePage} ) => {
+const PostFooter = ( {post,isProfilePage, creatorProfile} ) => {
   
   const {isCommenting,handlePostComment} = usePostComment();
   const [comment, setComment] = useState('')
@@ -39,13 +39,15 @@ const PostFooter = ( {post,username, isProfilePage} ) => {
     {!isProfilePage && (
       <>
       <Text fontSize='sm' fontWeight={700}>
-    {username}{" "}
+        {creatorProfile?.username}{" "}
       <Text as='span' fontWeight={400}>
-        Feeling good
+        {post.caption}
       </Text>
-      <Text fontSize='sm' color={"gray"}>
-        View all 1,000 comments
+      {post.comments.length > 0 && (
+        <Text fontSize='sm' color={"gray"} cursor={"pointer"}>
+        View all {post.comments.length} comments
       </Text>
+      )}
     </Text>
       </>
     )}
