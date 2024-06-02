@@ -4,6 +4,7 @@ import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constan
 import usePostComment from "../../hooks/usePostComment.js";
 import useAuthStore from "../../store/authStore.js";
 import useLikePost from "../../hooks/useLikePost.js";
+import timeAgo from '../../utils/timeAgo.js'
 
 const PostFooter = ( {post,isProfilePage, creatorProfile} ) => {
   
@@ -36,6 +37,12 @@ const PostFooter = ( {post,isProfilePage, creatorProfile} ) => {
       {likes} likes
       </Text>
 
+    {isProfilePage && (
+      <Text fontSize='12' color={"gray"}>
+        Posted {timeAgo(post.createdAt)}
+
+      </Text>
+    )}
     {!isProfilePage && (
       <>
       <Text fontSize='sm' fontWeight={700}>

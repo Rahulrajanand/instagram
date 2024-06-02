@@ -18,3 +18,5 @@ export const timeAgo = (timestamp) => {
 		return `${weeksAgo}w ago`;
 	}
 }; 
+
+export default timeAgo;
