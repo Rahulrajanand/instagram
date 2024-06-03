@@ -32,7 +32,7 @@ const Sidebar = () => {
       }}
       w={10}
     cursor="pointer">
-    <InstagramLogo/>
+    {/* <InstagramLogo/> */}
     </Link>
     <Link to={"/"} as={RouterLink} p={2} display={{base:"block", md:"none"}} cursor="pointer">
     <InstagramMobileLogo/>
