@@ -1,6 +1,6 @@
 import {  Box, Button, Flex, Link, Tooltip } from "@chakra-ui/react"
 import { Link as RouterLink} from 'react-router-dom';
-import {  InstagramLogo, InstagramMobileLogo,  } from "../../assets/constants";
+import { InstagramLogo, InstagramMobileLogo,  } from "../../assets/constants";
 
 import { BiLogOut } from 'react-icons/bi'
 import useLogout from "../../hooks/useLogout";
@@ -11,15 +11,7 @@ const Sidebar = () => {
   const {handleLogout,isLoggingOut} = useLogout()
 
   return (
-  <Box
-  height={"100vh"}
-  borderRight={"1px solid"}
-  py={8}
-  position={"sticky"}
-  top={0}
-  left={0}
-  px={{base:2,md:4}}
-  >
+  <Box height={"100vh"} borderRight={"1px solid"} py={8} position={"sticky"} top={0} left={0} px={{base:2,md:4}}>
 
   <Flex direction={"column"} gap={10} w="full" height={"full"}>
     <Link to={"/"} as={RouterLink} pl={2} display={{base:"none", md:"block"}}
@@ -29,7 +21,7 @@ const Sidebar = () => {
       }}
       w={10}
     cursor="pointer">
-    <InstagramLogo/>
+    <InstagramLogo/>       
     </Link>
     <Link to={"/"} as={RouterLink} p={2} display={{base:"block", md:"none"}} cursor="pointer">
     <InstagramMobileLogo/>

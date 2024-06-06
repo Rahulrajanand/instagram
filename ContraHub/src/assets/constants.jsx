@@ -17,6 +17,8 @@ export const InstagramLogo = () => (
 	</svg>
 );
 
+
+
 export const InstagramMobileLogo = () => (
 	<svg
 		aria-label='Instagram'
