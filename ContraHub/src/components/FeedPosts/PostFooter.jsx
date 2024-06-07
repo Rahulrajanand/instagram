@@ -91,4 +91,4 @@ const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
 	);
 };
 
-export default PostFooter;
+export default PostFooter; 
