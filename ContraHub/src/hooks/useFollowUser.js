@@ -85,4 +85,4 @@ const useFollowUser = (userId) => {
 	return { isUpdating, isFollowing, handleFollowUser };
 };
 
-export default useFollowUser;
+export default useFollowUser; 
