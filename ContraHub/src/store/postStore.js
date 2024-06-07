@@ -9,7 +9,7 @@ const usePostStore = create((set) => ({
         set((state) =>  ({
         posts: state.posts.map(post => {
             if(post.id === postId) {
-                return {
+                return { 
                     ...post,
                     comments: [...post.comments,comment]
                 }
